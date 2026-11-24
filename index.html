@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Management Frontend using DOM, events, validation and localStorage.">
+  <title>Student Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">DOM • EVENTS • LOCAL STORAGE</p>
+      <h1>Student Management</h1>
+      <p class="subtitle">Manage student records in one simple dashboard.</p>
+    </div>
+    <span class="storage-status"><span class="status-dot"></span> Saved in this browser</span>
+  </header>
+
+  <main class="container">
+    <section class="stats-grid" aria-label="Student record counts">
+      <article class="stat-card"><span>Total Students</span><strong id="totalCount">0</strong></article>
+      <article class="stat-card"><span>Active Students</span><strong id="activeCount">0</strong></article>
+      <article class="stat-card"><span>Departments</span><strong id="departmentCount">0</strong></article>
+      <article class="stat-card"><span>Current Page</span><strong id="pageCount">1 / 1</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">STUDENT DETAILS</p><h2 id="formTitle">Add New Student</h2></div>
+        <span class="required-note">* Required fields</span>
+      </div>
+      <form id="studentForm" novalidate>
+        <input type="hidden" id="studentId">
+        <div class="form-grid">
+          <label>Full Name *<input id="name" type="text" placeholder="e.g. Ayesha Samu" maxlength="60" required></label>
+          <label>Roll Number *<input id="rollNo" type="text" placeholder="e.g. SE-2026-01" maxlength="20" required></label>
+          <label>Email Address *<input id="email" type="email" placeholder="student@example.com" required></label>
+          <label>Department *
+            <select id="department" required>
+              <option value="">Select department</option>
+              <option>Software Engineering</option><option>Computer Science</option>
+              <option>Information Technology</option><option>Electrical Engineering</option>
+              <option>Business Administration</option>
+            </select>
+          </label>
+          <label>Semester *
+            <select id="semester" required>
+              <option value="">Select semester</option>
+              <option value="1">1st Semester</option><option value="2">2nd Semester</option>
+              <option value="3">3rd Semester</option><option value="4">4th Semester</option>
+              <option value="5">5th Semester</option><option value="6">6th Semester</option>
+              <option value="7">7th Semester</option><option value="8">8th Semester</option>
+            </select>
+          </label>
+          <label>Status
+            <select id="status"><option>Active</option><option>Inactive</option></select>
+          </label>
+        </div>
+        <p id="formMessage" class="form-message" role="alert"></p>
+        <div class="form-actions">
+          <button class="btn primary" type="submit" id="saveBtn">Add Student</button>
+          <button class="btn secondary" type="button" id="cancelEditBtn" hidden>Cancel Edit</button>
+          <button class="btn ghost" type="reset" id="resetBtn">Reset Form</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading list-heading">
+        <div><p class="eyebrow">RECORDS</p><h2>Student Directory</h2></div>
+        <div class="data-actions">
+          <button class="btn secondary" id="exportBtn" type="button">Export JSON</button>
+          <label class="btn secondary file-label" for="importFile">Import JSON</label>
+          <input id="importFile" type="file" accept=".json,application/json" hidden>
+        </div>
+      </div>
+      <div class="filters">
+        <label class="search-field">Search<input id="searchInput" type="search" placeholder="Name, roll number or email..."></label>
+        <label>Department<select id="departmentFilter"><option value="">All Departments</option></select></label>
+        <label>Semester<select id="semesterFilter"><option value="">All Semesters</option>
+          <option value="1">1st Semester</option><option value="2">2nd Semester</option>
+          <option value="3">3rd Semester</option><option value="4">4th Semester</option>
+          <option value="5">5th Semester</option><option value="6">6th Semester</option>
+          <option value="7">7th Semester</option><option value="8">8th Semester</option>
+        </select></label>
+        <label>Status<select id="statusFilter"><option value="">All Statuses</option><option>Active</option><option>Inactive</option></select></label>
+        <label>Sort By<select id="sortSelect"><option value="newest">Newest First</option><option value="name">Name (A–Z)</option><option value="roll">Roll Number</option><option value="semester">Semester</option></select></label>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Student</th><th>Roll Number</th><th>Department</th><th>Semester</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="studentTableBody"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state">No student records found. Add a student to get started.</div>
+      </div>
+      <div class="pagination">
+        <span id="resultsInfo">Showing 0 students</span>
+        <div><button class="btn secondary small" id="prevBtn" type="button">Previous</button><button class="btn secondary small" id="nextBtn" type="button">Next</button></div>
+      </div>
+    </section>
+
+    <section class="panel audit-panel">
+      <div class="section-heading"><div><p class="eyebrow">RECENT ACTIVITY</p><h2>Audit Log</h2></div><span class="muted">Last 10 changes</span></div>
+      <ul id="auditList" class="audit-list"><li class="muted">No activity yet.</li></ul>
+    </section>
+    <footer>Student Management Frontend · Data is stored locally in your browser.</footer>
+  </main>
+  <script src="js/app.js"></script>
+</body>
+</html>
